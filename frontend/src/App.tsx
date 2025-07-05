@@ -1,8 +1,11 @@
+import { Home } from "./pages/Home"
 
 function App() {
   
   return (
-    <div>Hello</div>
+    <div>
+      <Home />
+    </div>
   )
 }
 
