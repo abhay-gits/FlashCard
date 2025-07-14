@@ -29,7 +29,7 @@ export const Hero = () => {
         </div>
         <div className="text-center mt-20">
             <h1 className='text-2xl text-black font-bold mb-2' >Ready to Elevate your Learning Game?</h1>    
-            <p className='text-sm text-gray-500 mb-4'>Join thousands of learners who have transformed their Learning habits with FlashCard.</p>
+            <p className='text-sm text-gray-500 mb-4'>Join thousands of learners who have transformed their Learning habits with Revisly.</p>
             <SignInButton>
               <div className="bg-blue-500 w-30 m-auto text-white py-3 px-3 text-xs rounded hover:bg-blue-700 transition-all duration-200 cursor-pointer">
                 Get Started

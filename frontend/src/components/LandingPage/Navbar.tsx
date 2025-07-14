@@ -8,7 +8,7 @@ export const Navbar: React.FC = () => {
       <div className="bg-white text-black h-12 flex items-center justify-between gap-2 px-6">
         <div className="flex gap-3">
           <img src={logo} alt="logo" width={20} />
-          <h1 className="font-bold">FlashCard</h1>
+          <h1 className="font-bold">Revisly</h1>
         </div>
         <div className="flex items-center gap-7">
           <ul className="hidden sm:flex gap-8 text-xs text-gray-600 font-semibold ">
