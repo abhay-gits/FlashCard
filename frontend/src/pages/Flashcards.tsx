@@ -98,7 +98,7 @@ export const Deck = () => {
   };
 
   return (
-    <div>
+    <div className="bg-white min-h-screen">
       <Navbar />
       <hr className="text-gray-300" />
       <div className="px-7 py-4">
