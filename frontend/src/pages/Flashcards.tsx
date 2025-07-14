@@ -1,10 +1,10 @@
+import axios from "../utils/axios";
 import { Navbar } from "../components/Navbar";
-import deleteIcon from "../assets/delete.svg";
-import edit from "../assets/edit.svg";
 import { useEffect, useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
-import axios from "axios";
 import { useParams } from "react-router-dom";
+import deleteIcon from "../assets/delete.svg";
+import edit from "../assets/edit.svg";
 
 export const Deck = () => {
 
@@ -26,23 +26,25 @@ export const Deck = () => {
     const fetchFlashcards = async () => {
       try {
         if (!isLoaded || !isSignedIn) {
-          console.error("User is not signed in or auth is not loaded");
+          //console.error("User is not signed in or auth is not loaded");
           return;
         }
         const token = await getToken();
         const response = await axios.get(
-          `http://localhost:3000/api/flashcard/${deckId}`,
+          `/api/flashcard/${deckId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
+        if (!response.data) {
+         // console.error("No flashcards found for this deck");
+          return;
+        }
         setFlashcards(response.data);
-        console.log(response.data);
-        console.log(flashcards)
       } catch (error) {
-        console.error("Error fetching flashcards:", error);
+        //console.error("Error fetching flashcards:", error);
       }
     };
     fetchFlashcards();
@@ -51,12 +53,11 @@ export const Deck = () => {
   const createFlashcard = async () => {
     try {
       if (!isLoaded || !isSignedIn) {
-        console.error("User is not signed in or auth is not loaded");
+        //console.error("User is not signed in or auth is not loaded");
         return;
       }
       const token = await getToken();
-      const response = await axios.post(
-        "http://localhost:3000/api/flashcard",
+      const response = await axios.post("/api/flashcard",
         {
           question,
           answer,
@@ -70,32 +71,30 @@ export const Deck = () => {
       setQuestion("");
       setAnswer("");
     } catch (error) {
-      console.error("Error creating flashcard:", error);
+      //console.error("Error creating flashcard:", error);
     }
   };
 
   const handleDeleteFlashcard = async (flashcardId: string) => {
     try {
       if (!isLoaded || !isSignedIn) {
-        console.error("User is not signed in or auth is not loaded");
+        //console.error("User is not signed in or auth is not loaded");
         return;
       }
       const token = await getToken();
-      await axios.delete(`http://localhost:3000/api/flashcard/${flashcardId}`, {
+      await axios.delete(`/api/flashcard/${flashcardId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setFlashcards((prev) =>
         prev.filter((flashcard) => flashcard._id !== flashcardId)
       );
     } catch (error) {
-      console.error("Error deleting flashcard:", error);
+      //console.error("Error deleting flashcard:", error);
     }
   };  
 
   const toggleCreateDeckModal = () => {
     document.getElementById("create-deck-modal")?.classList.toggle("hidden");
-
-    console.log("Toggle create deck modal");
   };
 
   return (

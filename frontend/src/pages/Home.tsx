@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
+import axios from "../utils/axios";
 import { Navbar } from "../components/Navbar";
-import axios from "axios";
 import { useAuth } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import deleteIcon from "../assets/delete.svg";
@@ -21,21 +21,20 @@ export const Home: React.FC = () => {
   useEffect(() => {
     const fetchDecks = async () => {
       if (!isLoaded || !isSignedIn) {
-        console.error("User is not signed in or auth is not loaded");
         return;
       }
       try {
         const token = await getToken();
-        const response = await axios.get("http://localhost:3000/api/deck", {
+        const response = await axios.get("/api/deck", {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!response.data.decks || response.data.decks.length === 0) {
-          console.log("No decks found for this user");
+          //console.log("No decks found for this user");
           return;
         }
         setdecks(response.data.decks);
       } catch (error) {
-        console.error("Error fetching decks:", error);
+        //console.error("Error fetching decks:", error);
       }
     };
     fetchDecks();
@@ -43,13 +42,13 @@ export const Home: React.FC = () => {
 
   const handleCreateDeck = async () => {
     if (!isLoaded || !isSignedIn) {
-      console.error("User is not signed in or auth is not loaded");
+      //console.error("User is not signed in or auth is not loaded");
       return;
     }
     try {
       const token = await getToken();
       const response = await axios.post(
-        "http://localhost:3000/api/deck",
+        "/api/deck",
         { deckName: newDeck },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -58,26 +57,26 @@ export const Home: React.FC = () => {
       setdecks((prev) => [...prev, response.data]);
       setNewDeck("");
     } catch (error) {
-      console.error("Error creating deck:", error);
+      //console.error("Error creating deck:", error);
     }
   };
 
   //delete deck
   const handleDeleteDeck = async (id: string) => {
     if (!isLoaded || !isSignedIn) {
-      console.error("User is not signed in or auth is not loaded");
+      //console.error("User is not signed in or auth is not loaded");
       return;
     }
     try {
       const token = await getToken();
-      await axios.delete(`http://localhost:3000/api/deck/${id}`, {
+      await axios.delete(`/api/deck/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setdecks((prev) => prev.filter((deck) => deck._id !== id));
     } catch (error) {
-      console.error("Error deleting deck:", error);
+      //console.error("Error deleting deck:", error);
     }
-  }
+  };
 
   return (
     <div className="bg-white min-h-screen">
@@ -105,19 +104,26 @@ export const Home: React.FC = () => {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
           {decks.map((deck, index) => (
-              <div onClick={() => navigate(`/deck/${deck._id}`)}
-                className=" mt-4 p-4 h-40 rounded cursor-pointer"
-                key={deck._id}
-                style={{ backgroundColor: colors[index % colors.length] }}
-              >
-                <div className="flex justify-end gap-2 items-center mb-2 ">
-                <img src={deleteIcon} width={16} 
-                onClick={(e)=>{
-                  e.stopPropagation();
-                  handleDeleteDeck(deck._id)}}/>
-                </div>
-                <h1 className="font-bold text-center text-white pt-5">{deck.deck}</h1>
+            <div
+              onClick={() => navigate(`/deck/${deck._id}`)}
+              className=" mt-4 p-4 h-40 rounded cursor-pointer"
+              key={deck._id}
+              style={{ backgroundColor: colors[index % colors.length] }}
+            >
+              <div className="flex justify-end gap-2 items-center mb-2 ">
+                <img
+                  src={deleteIcon}
+                  width={16}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteDeck(deck._id);
+                  }}
+                />
               </div>
+              <h1 className="font-bold text-center text-white pt-5">
+                {deck.deck}
+              </h1>
+            </div>
           ))}
         </div>
       </div>

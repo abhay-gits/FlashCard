@@ -1,8 +1,8 @@
 import { SignedIn, SignedOut } from "@clerk/clerk-react";
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./pages/Home";
-import LandingPage from "./pages/LandingPage";
 import { Deck } from "./pages/Flashcards";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   return (
