@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 
-const topicSchema = new mongoose.Schema({
-    topicId: {
+const flashcardSchema = new mongoose.Schema({
+    deckId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Topic',
+        ref: 'Deck',
         required: true
     },
     question: {
@@ -16,5 +16,5 @@ const topicSchema = new mongoose.Schema({
     },
 })
 
-const Flashcard = mongoose.model('Flashcard', topicSchema);
+const Flashcard = mongoose.model('Flashcard', flashcardSchema);
 export default Flashcard;

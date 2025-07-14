@@ -1,19 +1,28 @@
 import express from 'express';
-import dotenv from 'dotenv/config';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import { clerkMiddleware } from '@clerk/express';
 
 import connectDB from './db/connection.db.js';
-import topicRoute from './routes/topic.route.js';
+import deckRoute from './routes/deck.route.js';
 import flashcardRoute from './routes/flashcard.route.js';
+import requireUser from './middleware/requireUser.js';
 
+dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(cors());
+app.use(clerkMiddleware());
 app.use(express.json());
 
-app.use('/api/topic', topicRoute)
-app.use('/api/flashcard', flashcardRoute);
+app.use('/api/deck', requireUser, deckRoute)
+app.use('/api/flashcard', requireUser, flashcardRoute);
 
 app.listen(PORT, async() => {
-  await connectDB();
-  console.log(`Server is running on http://localhost:${PORT}`);
+  try {
+    await connectDB();
+  } catch (error) {
+    process.exit(1); 
+  }
 });
