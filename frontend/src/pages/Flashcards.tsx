@@ -103,7 +103,7 @@ export const Deck = () => {
       <hr className="text-gray-300" />
       <div className="px-7 py-4">
         <div className="flex justify-between">
-          <h1 className="font-semibold">Deck Name</h1>
+          <h1 className="font-semibold text-black">Deck Name</h1>
           <div>
             <button
               onClick={toggleCreateDeckModal}
