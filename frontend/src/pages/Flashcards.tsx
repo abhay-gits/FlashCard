@@ -145,12 +145,16 @@ export const Deck = () => {
             {flashcards.map((flashcard, index)=>(
               <div
                 key={index}
-                className="bg-yellow-200 p-3 rounded relative max-h-52 min-h-52 overflow-y-scroll"
+                className="bg-green-100 p-3 rounded relative max-h-52 min-h-52 overflow-y-scroll"
               >
                 <h1 className="font-bold">{index + 1}. {flashcard.question}</h1>
-                <p className="px-4 break-words">{flashcard.answer}</p>
+                <p id={`answer-${flashcard._id}`}
+                onClick={()=>{
+                  document.getElementById(`answer-${flashcard._id}`)?.classList.toggle("blur-xs");
+                }}
+                className="px-4 break-words whitespace-pre-line blur-xs cursor-grab ">{flashcard.answer}</p>
                 <div className="flex gap-2 absolute bottom-2 right-2">
-                  <img src={edit} width={25} className="bg-white p-1 rounded" />
+                  <img src={edit} width={25} className="bg-white p-1 rounded hidden" />
                   <img
                     src={deleteIcon}
                     width={25}
