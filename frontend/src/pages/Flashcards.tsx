@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
 import { useParams } from "react-router-dom";
 import deleteIcon from "../assets/delete.svg";
-import edit from "../assets/edit.svg";
 
 export const Deck = () => {
   type Flashcard = {
