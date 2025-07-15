@@ -94,7 +94,7 @@ export const Deck = () => {
   const toggleCreateDeckModal = () => {
     document.getElementById("create-deck-modal")?.classList.toggle("hidden");
   };
-
+  
   return (
     <div className="bg-white min-h-screen">
       <Navbar />
