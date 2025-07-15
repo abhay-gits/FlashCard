@@ -18,7 +18,7 @@ export const Navbar: React.FC = () => {
             <li className="cursor-pointer">Support</li>
           </ul>
           <SignInButton>
-          <div className="bg-blue-500 text-white p-2 px-3 text-xs rounded hover:bg-blue-700 transition-all duration-200 cursor-pointer">
+          <div className="bg-blue-500 text-white p-2 px-3 text-xs rounded-2xl hover:bg-blue-700 transition-all duration-200 cursor-pointer">
             Get Started
           </div>
             </SignInButton>

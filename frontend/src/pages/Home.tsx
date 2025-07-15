@@ -14,8 +14,9 @@ export const Home: React.FC = () => {
   const [decks, setdecks] = React.useState<deck[]>([]);
   const [newDeck, setNewDeck] = React.useState("");
   const { getToken, isLoaded, isSignedIn } = useAuth();
+  const [loading, setLoading] = React.useState(true);
 
-  const colors = ["#f87171", "#60a5fa", "#34d399", "#fbbf24", "#a78bfa"];
+  const colors = ["orange", "blue", "green", "purple", "red"];
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,6 +34,7 @@ export const Home: React.FC = () => {
           return;
         }
         setdecks(response.data.decks);
+        setLoading(false);
       } catch (error) {
         //console.error("Error fetching decks:", error);
       }
@@ -85,47 +87,57 @@ export const Home: React.FC = () => {
       <div className="bg-white px-8 sm:px-40 py-10 text-black">
         <div>
           <h1 className="font-bold text-2xl mb-1">Decks</h1>
-          <p className="font-light">Browse and select decks to study</p>
+          <p className="font-light">Create and select decks to study</p>
           <div className="flex items-center mt-4">
             <input
               type="text"
               value={newDeck}
               onChange={(e) => setNewDeck(e.target.value)}
-              placeholder="Create new deck"
-              className="bg-gray-200 px-3 rounded w-full h-8"
+              placeholder="Enter deck name"
+              className="bg-gray-200 px-3 rounded-lg w-full h-8"
             />
             <button
               onClick={handleCreateDeck}
-              className="bg-blue-500 text-white px-2 py-1 rounded ml-2 cursor-pointer hover:bg-blue-600 transition duration-200"
+              className="bg-blue-500 text-white px-2 py-1 rounded-lg ml-2 cursor-pointer hover:bg-blue-600 transition duration-200"
             >
               Create
             </button>
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
-          {decks.map((deck, index) => (
-            <div
-              onClick={() => navigate(`/deck/${deck._id}`)}
-              className=" mt-4 p-4 h-40 rounded cursor-pointer"
-              key={deck._id}
-              style={{ backgroundColor: colors[index % colors.length] }}
-            >
-              <div className="flex justify-end gap-2 items-center mb-2 ">
-                <img
-                  src={deleteIcon}
-                  width={16}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDeleteDeck(deck._id);
-                  }}
-                />
+        {loading ? (
+          <div className="text-center text-gray-500 mt-20">
+            <span className="loading loading-bars loading-xl"></span>
+          </div>
+        ) : decks.length === 0 ? (
+          <div className="text-center text-gray-500 mt-20">
+            No decks available
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
+            {decks.map((deck, index) => (
+              <div
+                onClick={() => navigate(`/deck/${deck._id}`)}
+                className=" mt-4 p-4 h-40 rounded-2xl cursor-pointer hover:shadow-lg hover:scale-95 transition duration-200"
+                key={deck._id}
+                style={{ backgroundColor: colors[index % colors.length] }}
+              >
+                <div className="flex justify-end gap-2 items-center mb-2 ">
+                  <img
+                    src={deleteIcon}
+                    width={16}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteDeck(deck._id);
+                    }}
+                  />
+                </div>
+                <h1 className="font-bold text-center text-white pt-5">
+                  {deck.deck}
+                </h1>
               </div>
-              <h1 className="font-bold text-center text-white pt-5">
-                {deck.deck}
-              </h1>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

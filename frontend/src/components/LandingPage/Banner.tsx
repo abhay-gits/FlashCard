@@ -3,9 +3,9 @@ import banner from "../../assets/LandingPage/banner.svg";
 
 export const Banner = () => {
   return (
-    <div className="px-3 sm:px-30 py-10 m-auto">
+    <div className="px-4 sm:px-30 py-10 m-auto">
       <div
-        className="m-auto bg-gray-500 rounded-2xl h-80 flex items-center justify-center flex-col gap-4 shadow-lg bg-cover bg-center opacity-90 text-white"
+        className="m-auto bg-gray-500 rounded-3xl h-80 flex items-center justify-center flex-col gap-4 shadow-lg bg-cover bg-center opacity-90 text-white"
         style={{
           backgroundImage: `url(${banner})`,
         }}
@@ -20,7 +20,7 @@ export const Banner = () => {
           Customize and conquer anything, anywhere
         </p>
         <SignInButton>
-          <div className="bg-blue-500 text-white p-2 px-3 text-xs rounded hover:bg-blue-700 transition-all duration-200 cursor-pointer">
+          <div className="bg-blue-500 text-white p-2 px-3 text-xs rounded-xl hover:bg-blue-700 transition-all duration-200 cursor-pointer">
             Get Started
           </div>
         </SignInButton>
