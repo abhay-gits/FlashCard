@@ -1,8 +1,10 @@
 import axios from "../utils/axios";
+import ReactMarkdown from "react-markdown";
 import { Navbar } from "../components/Navbar";
 import { useEffect, useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
 import { useParams } from "react-router-dom";
+import MarkdownGuide from "../components/MarkdownGuide";
 import deleteIcon from "../assets/delete.svg";
 
 export const Deck = () => {
@@ -94,7 +96,7 @@ export const Deck = () => {
   const toggleCreateDeckModal = () => {
     document.getElementById("create-deck-modal")?.classList.toggle("hidden");
   };
-  
+
   return (
     <div className="bg-white min-h-screen">
       <Navbar />
@@ -137,6 +139,9 @@ export const Deck = () => {
             >
               Submit
             </button>
+            <div>
+              <MarkdownGuide />
+            </div>
           </div>
 
           {/* Flashcards */}
@@ -165,22 +170,18 @@ export const Deck = () => {
                   </div>
                   <h1 className="font-bold text-black">
                     {index + 1}. {flashcard.question}
-                  </h1 >
+                  </h1>
                   <div
-                  id={`answer-${flashcard._id}`}
+                    id={`answer-${flashcard._id}`}
                     onClick={() => {
                       document
-                      .getElementById(`answer-${flashcard._id}`)
-                      ?.classList.toggle("blur-xs");
+                        .getElementById(`answer-${flashcard._id}`)
+                        ?.classList.toggle("blur-xs");
                     }}
-                  className="overflow-y-auto h-40 blur-xs transition duration-100 bg-green-50 rounded-lg p-2 mt-2">
-                  <p
-                    className="px-4 break-words whitespace-pre-line cursor-grab "
-                    >
-                    {flashcard.answer}
-                  </p>
-                    </div>
-                  
+                    className="markdown overflow-y-auto h-40 blur-xs transition duration-100 bg-green-50 rounded-lg p-2 mt-2"
+                  >
+                    <ReactMarkdown>{flashcard.answer}</ReactMarkdown>
+                  </div>
                 </div>
               ))}
             </div>
