@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function MarkdownGuide() {
   const guide = `
 # Markdown Syntax Guide
