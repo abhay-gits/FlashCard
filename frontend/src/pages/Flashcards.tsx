@@ -178,7 +178,7 @@ export const Deck = () => {
                         .getElementById(`answer-${flashcard._id}`)
                         ?.classList.toggle("blur-xs");
                     }}
-                    className="markdown overflow-y-auto h-40 blur-xs transition duration-100 bg-green-50 rounded-lg p-2 mt-2"
+                    className="markdown overflow-y-auto h-40 blur-xs transition duration-100 bg-green-50 rounded-lg p-2 mt-2 cursor-context-menu"
                   >
                     <ReactMarkdown>{flashcard.answer}</ReactMarkdown>
                   </div>
