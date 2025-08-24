@@ -6,6 +6,7 @@ import { useAuth } from "@clerk/clerk-react";
 import { useParams } from "react-router-dom";
 import MarkdownGuide from "../components/MarkdownGuide";
 import deleteIcon from "../assets/delete.svg";
+import ConfirmModal from "../components/ConfirmModal";
 
 export const Deck = () => {
   type Flashcard = {
@@ -20,6 +21,8 @@ export const Deck = () => {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [flashcardId, setFlashcardId] = useState<any>()
 
   const { deckId } = useParams();
 
@@ -75,7 +78,7 @@ export const Deck = () => {
     }
   };
 
-  const handleDeleteFlashcard = async (flashcardId: string) => {
+  const onConfirm = async()=>{
     try {
       if (!isLoaded || !isSignedIn) {
         //console.error("User is not signed in or auth is not loaded");
@@ -90,17 +93,38 @@ export const Deck = () => {
       );
     } catch (error) {
       //console.error("Error deleting flashcard:", error);
+    }finally{
+      setShowModal(false)
     }
-  };
+  }
+
+  const onCancel = ()=>{
+    setShowModal(false)
+  }
+
+  const deleteFlashCard = async (flashcardId: string)=>{
+    setFlashcardId(flashcardId)
+    setShowModal(true)
+  }
 
   const toggleCreateDeckModal = () => {
     document.getElementById("create-deck-modal")?.classList.toggle("hidden");
   };
 
   return (
+    
     <div className="bg-white min-h-screen">
-      <Navbar />
+            <Navbar />
       <hr className="text-gray-300" />
+      <div className="flex justify-center ">
+
+      {showModal &&(
+        <ConfirmModal
+        onConfirm={onConfirm}
+        onCancel={onCancel}
+        />
+      )}
+      </div>
       <div className="px-7 py-4">
         <div className="flex justify-end">
           <div>
@@ -113,6 +137,7 @@ export const Deck = () => {
           </div>
         </div>
         <div>
+        
           <div
             className="mt-4 p-3 rounded-2xl flex flex-col border border-gray-500 bg-green-50 hidden"
             id="create-deck-modal"
@@ -165,7 +190,8 @@ export const Deck = () => {
                       src={deleteIcon}
                       width={25}
                       className="bg-white p-1 rounded hover:bg-red-500 cursor-pointer"
-                      onClick={() => handleDeleteFlashcard(flashcard._id || "")}
+                        onClick={() => deleteFlashCard(flashcard._id || "")
+                      }
                     />
                   </div>
                   <h1 className="font-bold text-black">
