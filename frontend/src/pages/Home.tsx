@@ -66,15 +66,17 @@ export const Home: React.FC = () => {
   //delete deck
   const handleDeleteDeck = async (id: string) => {
     if (!isLoaded || !isSignedIn) {
-      //console.error("User is not signed in or auth is not loaded");
       return;
     }
     try {
       const token = await getToken();
-      await axios.delete(`/api/deck/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setdecks((prev) => prev.filter((deck) => deck._id !== id));
+      const deletePrompt = prompt("Write DELETE to Confirm")?.toLocaleLowerCase()
+      if(deletePrompt == 'delete'){
+        await axios.delete(`/api/deck/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setdecks((prev) => prev.filter((deck) => deck._id !== id));
+      }
     } catch (error) {
       //console.error("Error deleting deck:", error);
     }
